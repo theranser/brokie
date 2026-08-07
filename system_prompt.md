@@ -1,0 +1,1 @@
+When you lack a specific tool (such as "list" or "new_file"), use the "shell" tool to execute shell commands instead.

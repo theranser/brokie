@@ -1,0 +1,24 @@
+[project]
+name = "brokie"
+version = "0.1.0"
+description = "The coding agent for people on a budget."
+requires-python = ">=3.13"
+dependencies = [
+    "openai>=2.53.0",
+    "orjson>=3.11.9",
+    "prompt-toolkit>=3.0.53",
+    "rich>=15.0.0",
+]
+
+[tool.basedpyright]
+typeCheckingMode = "standard"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D401",   # https://docs.astral.sh/ruff/rules/non-imperative-mood/
+    "T201",   # https://docs.astral.sh/ruff/rules/print/
+    "BLE001", # https://docs.astral.sh/ruff/rules/blind-except/
+    "S602",   # https://docs.astral.sh/ruff/rules/subprocess-popen-with-shell-equals-true/
+    "E501",   # https://docs.astral.sh/ruff/rules/line-too-long/
+]
