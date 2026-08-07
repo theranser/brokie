@@ -8,7 +8,9 @@ from openai import OpenAI
 from openai.types.chat import (
     ChatCompletionMessageFunctionToolCall,
 )
-from prompt_toolkit import prompt as pt_prompt
+from platformdirs import user_data_dir
+from prompt_toolkit import PromptSession
+from prompt_toolkit.history import FileHistory
 from prompt_toolkit.styles import Style
 from rich.console import Console
 from rich.markdown import Markdown
@@ -22,6 +24,10 @@ config = load_config()
 SYSTEM_PROMPT = Path(Path(__file__).parent / "system_prompt.md").read_text()
 LOGO = Path(Path(__file__).parent / "logo.txt").read_text()
 INPUT_STYLE = Style.from_dict({"prompt": "ansired"})
+HISTORY_PATH = Path(user_data_dir("brokie")) / "history.txt"
+
+# Ensure the history directory exists
+HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 # Initialize the OpenAI client with an ollama base URL
 client = OpenAI(base_url=config["url"], api_key=config["api_key"])
@@ -39,9 +45,12 @@ def main() -> None:
     print(" ")
     rich.print(f"[bold green]{LOGO}")
     print(" ")
+    session = PromptSession(history=FileHistory(str(HISTORY_PATH)))
     try:
         while True:
-            prompt = pt_prompt([("class:prompt", "❯ ")], style=INPUT_STYLE)  # noqa: RUF001
+            prompt = session.prompt([("class:prompt", "❯ ")], style=INPUT_STYLE)  # noqa: RUF001
+            if not prompt.strip():
+                continue
             llm_response = llm_request(prompt, model=config["model"])
             console = Console()
             console.print(Markdown(llm_response), style="blue")
