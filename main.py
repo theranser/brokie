@@ -10,6 +10,8 @@ from openai.types.chat import (
 )
 from prompt_toolkit import prompt as pt_prompt
 from prompt_toolkit.styles import Style
+from rich.console import Console
+from rich.markdown import Markdown
 
 from config import load_config
 from tools import TOOL_IMPLS, tools
@@ -41,7 +43,9 @@ def main() -> None:
         while True:
             prompt = pt_prompt([("class:prompt", "❯ ")], style=INPUT_STYLE)  # noqa: RUF001
             llm_response = llm_request(prompt, model=config["model"])
-            rich.print(f"[blue]{llm_response}")
+            console = Console()
+            console.print(Markdown(llm_response), style="blue")
+            print(" ")
     except KeyboardInterrupt:
         rich.print("\n[bold red]Exiting...[/bold red]")
 
