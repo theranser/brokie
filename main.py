@@ -39,6 +39,9 @@ context.append({"role": "system", "content": SYSTEM_PROMPT})
 # Global state
 read_files = {}
 
+# Rich console for pretty printing
+console = Console()
+
 
 def main() -> None:
     """Main function to run the application."""
@@ -52,7 +55,6 @@ def main() -> None:
             if not prompt.strip():
                 continue
             llm_response = llm_request(prompt, model=config["model"])
-            console = Console()
             console.print(Markdown(llm_response), style="blue")
             print(" ")
     except KeyboardInterrupt:
@@ -68,6 +70,7 @@ def llm_request(prompt: str, model: str) -> str:
             model=model,
             tools=tools,
             messages=context,
+            parallel_tool_calls=False,
         )
         message = response.choices[0].message
 
@@ -75,6 +78,15 @@ def llm_request(prompt: str, model: str) -> str:
         if not message.tool_calls:
             context.append({"role": "assistant", "content": message.content})
             return message.content or ""
+
+        # Print the model's reasoning
+        thinking = (
+            getattr(message, "reasoning", None)
+            or getattr(message, "reasoning_content", None)
+        )
+        if thinking:
+            console.print(Markdown(thinking), style="grey50")
+            print(" ")
 
         # Record the model's tool call requests in context
         context.append(
