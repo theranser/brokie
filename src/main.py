@@ -21,8 +21,8 @@ from tools import TOOL_IMPLS, tools
 config = load_config()
 
 # Constants
-SYSTEM_PROMPT = Path(Path(__file__).parent / "system_prompt.md").read_text()
-LOGO = Path(Path(__file__).parent / "logo.txt").read_text()
+SYSTEM_PROMPT = Path(Path(__file__).parent.parent / "system_prompt.md").read_text()
+LOGO = Path(Path(__file__).parent.parent / "logo.txt").read_text()
 INPUT_STYLE = Style.from_dict({"prompt": "ansired"})
 HISTORY_PATH = Path(user_data_dir("brokie")) / "history.txt"
 
