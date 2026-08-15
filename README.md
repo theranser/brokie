@@ -32,7 +32,16 @@ uv tool install git+https://github.com/theranser/brokie
 
 ### Windows:
 
-COMING SOON
+brokie is managed by [uv](https://docs.astral.sh/uv/). Install it with:
+
+```bash
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+then install brokie with:
+```bash
+uv tool install git+https://github.com/theranser/brokie
+```
 
 ## Configuration
 
