@@ -27,7 +27,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 then install brokie with:
 ```bash
-uv tool install --editable git+https://github.com/theranser/brokie
+uv tool install git+https://github.com/theranser/brokie
 ```
 
 ### Windows:

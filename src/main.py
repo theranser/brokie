@@ -1,5 +1,6 @@
 """Main entry point for the application."""
 
+import sys
 from pathlib import Path
 
 import orjson
@@ -21,8 +22,15 @@ from tools import TOOL_IMPLS, tools
 config = load_config()
 
 # Constants
-SYSTEM_PROMPT = Path(Path(__file__).parent.parent / "system_prompt.md").read_text()
-LOGO = Path(Path(__file__).parent.parent / "logo.txt").read_text()
+_SOURCE_ROOT = Path(__file__).resolve().parent.parent
+_INSTALL_ROOT = Path(sys.prefix)
+
+_BASE_DIR = (
+    _SOURCE_ROOT if (_SOURCE_ROOT / "system_prompt.md").is_file() else _INSTALL_ROOT
+)
+
+SYSTEM_PROMPT = (_BASE_DIR / "system_prompt.md").read_text()
+LOGO = (_BASE_DIR / "logo.txt").read_text()
 INPUT_STYLE = Style.from_dict({"prompt": "ansired"})
 HISTORY_PATH = Path(user_data_dir("brokie")) / "history.txt"
 
@@ -80,9 +88,10 @@ def llm_request(prompt: str, model: str) -> str:
             return message.content or ""
 
         # Print the model's reasoning
-        thinking = (
-            getattr(message, "reasoning", None)
-            or getattr(message, "reasoning_content", None)
+        thinking = getattr(message, "reasoning", None) or getattr(
+            message,
+            "reasoning_content",
+            None,
         )
         if thinking:
             console.print(Markdown(thinking), style="grey50")
