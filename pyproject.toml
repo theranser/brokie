@@ -11,6 +11,9 @@ dependencies = [
     "rich>=15.0.0",
 ]
 
+[project.scripts]
+brokie = "main:main"
+
 [tool.basedpyright]
 typeCheckingMode = "standard"
 
