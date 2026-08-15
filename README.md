@@ -67,6 +67,6 @@ Linting is [ruff](https://docs.astral.sh/ruff/) with `select = ["ALL"]`, type ch
 
 To run the linting and formatting:
 ```bash
-uvx ruff format --check .
+uvx ruff format . && uvx ruff check .
 uvx basedpyright
 ```

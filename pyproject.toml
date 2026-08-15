@@ -27,9 +27,18 @@ typeCheckingMode = "standard"
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
+    # Style and formatting rules
     "D401",   # https://docs.astral.sh/ruff/rules/non-imperative-mood/
-    "T201",   # https://docs.astral.sh/ruff/rules/print/
-    "BLE001", # https://docs.astral.sh/ruff/rules/blind-except/
-    "S602",   # https://docs.astral.sh/ruff/rules/subprocess-popen-with-shell-equals-true/
+    "D203",   # https://docs.astral.sh/ruff/rules/incorrect-blank-line-before-class/
+    "D213",   # https://docs.astral.sh/ruff/rules/multi-line-summary-second-line/
     "E501",   # https://docs.astral.sh/ruff/rules/line-too-long/
+    "COM812", # https://docs.astral.sh/ruff/rules/missing-trailing-comma/
+
+    # Logic and correctness rules
+    "BLE001", # https://docs.astral.sh/ruff/rules/blind-except/
+    "PLR0911", # https://docs.astral.sh/ruff/rules/too-many-return-statements/
+    "S602",   # https://docs.astral.sh/ruff/rules/subprocess-popen-with-shell-equals-true/
+
+    # Other rules
+    "T201",   # https://docs.astral.sh/ruff/rules/print/
 ]
